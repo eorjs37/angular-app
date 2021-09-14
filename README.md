@@ -9,3 +9,10 @@ getHeroes(): Observable<Hero[]> {
     return heroes;
 }
 ```
+
+
+# routing 추가
+
+> 명령어
+> ng generate module app-routing --flat --module=app
+
