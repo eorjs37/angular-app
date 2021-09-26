@@ -36,3 +36,23 @@ getHeroes(): void{
     this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
 }
 ```
+## Routing
+> ng new routing-app --routing 를 입력 후 routing 설치
+
+### 사용하고자 하는 컴퍼넌트 생성
+```javascript
+ng generate component 생성하고자 하는 컴퍼넌트 생성
+```
+
+### app-routing.module.ts에 import
+```typescript
+import { RouterModule, Routes } from '@angular/router';
+import { FirstComponent } from './first/first.component';
+import { SecondComponent } from './second/second.component';
+
+
+const routes: Routes = [
+  { path: 'first', component: FirstComponent },
+  { path: 'second', component: SecondComponent },
+];
+```
