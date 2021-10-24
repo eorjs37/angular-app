@@ -56,3 +56,42 @@ const routes: Routes = [
   { path: 'second', component: SecondComponent },
 ];
 ```
+
+## Interface 생성
+> Java에서는 Interface를 통해 추상화 하고, Class에서 이것을 구체화하는 작업니다. Typescript에서도 비슷한 기능을 한다고 생각한다. Interface를 통해 추상화하고 Class에서 구체화 시키는 작업을 한다고 생각한다.
+
+### Interface 생성 명령어
+```Angular
+ng generate service <서비스명>
+```
+
+### Interface 구조
+```typescript
+
+export interface <인터페이스명> {
+    id: number;
+    password: string;
+    email:string;
+}
+
+```
+
+### Service에 Interface적용
+```typescript
+import { Injectable } from '@angular/core';
+import { Daegeon } from './daegeon'; // Interface
+import { DAEGEON } from './mock-daegeon'; // mock 데이터
+@Injectable({
+  providedIn: 'root'
+})
+export class DaegeonServiceService {
+  constructor() { }
+  /**
+   * return 타입은 Daegeon이라는 Interface로 받는다.
+   * */
+  getHeroes(): Daegeon[]{
+    return DAEGEON;
+  }
+}
+
+```
