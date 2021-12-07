@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { HeroService } from '../hero.service';
-import { Hero } from '../hero';
+import { HeroService } from '../service/hero.service';
+import { Hero } from '../models/hero';
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
@@ -10,25 +10,36 @@ import { Hero } from '../hero';
 })
 export class HeroDetailComponent implements OnInit {
   @Input() hero?: Hero;
-  constructor(private route: ActivatedRoute, private heroService: HeroService, private location: Location) { }
+  private id!: number;
+  constructor(
+    private route: ActivatedRoute,
+    private heroService: HeroService,
+    private location: Location
+  ) { }
 
   ngOnInit(): void {
     this.getHero();
   }
 
-  getHero(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.heroService.getHero(id)
+  getHero(): void{
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.heroService.getHero(this.id)
       .subscribe(hero => this.hero = hero);
   }
 
-  goBack(): void{
+  goBack(): void {
     this.location.back();
   }
 
-  save(): void{
-    if (this.hero) {
-      this.heroService.updateHero(this.hero).subscribe(() => this.goBack());
+  delete() {
+    const confirmWindow = confirm("삭제하시겠습니까?");
+
+    if (confirmWindow) {
+      this.heroService.deleteHero(this.id).subscribe(data => {
+        console.log('data : ' , data);
+        
+        this.location.back();
+      })
     }
   }
 }
