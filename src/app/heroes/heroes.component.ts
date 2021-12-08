@@ -1,34 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { Hero } from '../hero';
-import { HeroService } from '../hero.service';
+import { Hero } from '../models/hero';
+import { HeroService } from '../service/hero.service';
+import { MessageService } from '../service/message.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.state';
+import { loadHeroesRequestAction,loadHeroesSuccessAction } from '../store/reducers/hero/hero.actions';
+import { getHeroes } from '../store/reducers/hero/hero.selectors';
+import { Observable, of } from 'rxjs';
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  selectedHero?: Hero;
+  heores$!: Observable<Hero[]>;
+  hero: Hero = {
+    id: 1,
+    name: 'Windstorm'
+  };
   heroes: Hero[] = [];
-
-  constructor(private heroService: HeroService) { }
+  constructor(private heroService: HeroService,  private messageService: MessageService, private store$: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.getHeroes();
+    this.store$.dispatch(loadHeroesRequestAction());
+    this.store$.select(getHeroes).subscribe(heroStore => {
+      console.log('heroStore : ' , heroStore);
+      
+      this.heores$ = of(heroStore);
+    });
   }
-
-
-  getHeroes(): void{
-    this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
-  }
-
-  add(name: string): void{
-    name = name.trim();
-    if (!name) return;
-    this.heroService.addHero({ name } as Hero).subscribe(hero => this.heroes.push(hero));
-  }
-
-  delete(hero: Hero): void{
-    this.heroes = this.heroes.filter(h => h !== hero);
-    this.heroService.deleteHero(hero.id).subscribe();
+  getHeroes(): void {
+    this.heroService.getHeroes()
+      .subscribe(heroes => this.heroes = heroes);
   }
 }
