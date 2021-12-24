@@ -1,0 +1,7 @@
+<form [formGroup]="coffeeForm" (ngSubmit)="onSubmit()">
+    <input type="email" class="form-control" id="menuNm" aria-describedby="emailHelp" placeholder="메뉴명" formControlName="coffeeMenuNm">
+    <br>
+    <input type="number" class="form-control" id="price" aria-describedby="emailHelp" placeholder="가격" formControlName="coffeePrice">
+    <br>
+    <button type="submit" class="btn btn-danger">ADD</button>
+</form>
