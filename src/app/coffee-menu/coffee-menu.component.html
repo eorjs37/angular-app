@@ -1,0 +1,39 @@
+
+<!-- <button type="button" class="btn btn-info" [routerLink]="['/coffee-menu/add-coffee']" >메뉴 추가</button> -->
+<h1>
+  커피 메뉴
+</h1>
+<ul class="list-group">
+  <li *ngFor="let item of coffees$ | async" class="list-group-item" (click)="addCoffee(item)"> 
+    {{item.id}} / {{item.menuNm}} ({{item.price}}원) 
+    <button type="button" class="btn btn-primary">ADD</button>
+  </li> 
+</ul>
+<hr>
+  <h1>
+    계산
+  </h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">메뉴명</th>
+        <th scope="col">수량</th>
+        <th scope="col">가격</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let coffeeCollection of coffeeCollection$ | async">
+        <td>{{ coffeeCollection.menuNm }}</td>
+        <td>{{ coffeeCollection.quantity }}</td>
+        <td>
+          {{ coffeeCollection.totalPrice }}
+          <button class="btn btn-primary" type="button" (click)="plusCalCoffee(coffeeCollection)">추가</button>
+          <button class="btn btn-danger" type="button" (click)="minusCalCoffee(coffeeCollection)">빼기</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+ 총합 : {{ (total$ | async) }}원
+<hr>
+<router-outlet></router-outlet>
