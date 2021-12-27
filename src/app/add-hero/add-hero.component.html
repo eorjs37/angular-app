@@ -1,0 +1,5 @@
+<hr>
+<div *ngIf="hero.id !== -1">
+    <input type="text" [(ngModel)]="hero.name">
+    <button (click)="addHero()">Add Hero</button>
+</div>
