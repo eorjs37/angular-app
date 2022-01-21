@@ -1,7 +1,0 @@
-<ul class="list-group">
-    <li class="list-group-item" *ngFor="let item of newHero2$ | async">
-        {{item.id}} / {{item.name}}
-        <button type="button" class="btn btn-primary" (click)="selectedNewHero(item)">EDIT</button>
-        <button type="button" class="btn btn-danger">DELETE</button>
-    </li>    
-</ul>
