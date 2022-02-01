@@ -1,0 +1,11 @@
+<h1>커피 메뉴생성</h1>
+{{ model | json }}
+<div class="form-group">
+    <label for="menu-name">메뉴명</label>
+    <input id="menu-name" class="form-control" type="text" [(ngModel)]="model.menuNm">
+</div>
+
+<div class="form-group">
+    <label for="price">메뉴명</label>
+    <input id="price" class="form-control" type="number" [(ngModel)]="model.price">
+</div>
