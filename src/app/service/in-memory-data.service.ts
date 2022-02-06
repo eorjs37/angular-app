@@ -34,7 +34,13 @@ export class InMemoryDataService implements InMemoryDbService{
       { id: 19, name: 'Magma' },
       { id: 20, name: 'Tornado' }
     ];
-    return {courses,coffees,heroes}
+
+    const desert = [
+       { id: 11, menuNm: '던킨더넛츠', price: 6000 },
+       { id: 22, menuNm: '초콜렛생크림', price: 6000 },
+       { id: 33, menuNm: '카스테라', price: 3000 },
+    ]
+    return {courses,coffees,heroes,desert}
   }
   constructor() { }
 }
