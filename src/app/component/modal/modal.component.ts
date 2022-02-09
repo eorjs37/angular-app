@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectorRef, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -8,20 +8,26 @@ import { Component, Input, OnInit, ChangeDetectorRef, SimpleChanges, Output, Eve
 export class ModalComponent implements OnInit {
   @Input() isModal: boolean = false;
   @Output() outsideEvent = new EventEmitter<any>();
-  constructor(private cd: ChangeDetectorRef) { }
+  @Output() paymentEvent = new EventEmitter<any>();
+  constructor() { }
 
   ngOnInit(): void {
 
   }
 
-  ngOnChanges(simpleChanges: SimpleChanges) {
-    console.log('previousValue : ',simpleChanges.isModal.previousValue);
-  }
 
   outslideClick(event: any) {
     const className = event.target.className;
-    if (className === 'wrap') {
-      this.outsideEvent.emit();
+    if (className === 'modal') {
+      this.closeModal();
     }
+  }
+
+  closeModal() {
+    this.outsideEvent.emit();
+  }
+
+  payment() {
+    
   }
 }
