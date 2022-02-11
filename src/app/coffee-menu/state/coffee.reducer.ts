@@ -1,4 +1,4 @@
-import { loadCoffeeRequest, addCoffee, addCoffeeCollections, removeCoffeeCollections } from './coffee.actions';
+import { loadCoffeeRequest, loadSuccessCoffee, addCoffee, addCoffeeCollections, removeCoffeeCollections } from './coffee.actions';
 import { createReducer, on } from '@ngrx/store';
 import { Coffee } from 'src/app/models/coffee';
 import { Collections } from 'src/app/models/collections';
@@ -18,6 +18,10 @@ export const initialState: CoffeeState = {
 export const coffeeReducer = createReducer(
     initialState,
     on(loadCoffeeRequest, (state, { coffees }) => ({
+        ...state,
+        coffees: coffees
+    })),
+    on(loadSuccessCoffee, (state, { coffees })=> ({
         ...state,
         coffees: coffees
     })),

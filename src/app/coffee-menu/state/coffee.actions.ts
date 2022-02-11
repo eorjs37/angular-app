@@ -2,7 +2,11 @@ import { createAction, props } from "@ngrx/store";
 import { Coffee } from "src/app/models/coffee";
 
 export enum CoffeeActionsTypes{
+    BEFORE_LOAD_COFFEES = "[Coffee] Before Load Coffee",
     LOAD_COFFEES = "[Coffee] Load Coffee",
+    LOAD_COFFEES_SUCCESS = "[Coffees API] Coffees Load Coffees",
+    LOAD_COFFEES_FAIL = "[Coffees API] Coffees Load Fail",
+
     ADD_COFFEE = "[Coffee] Add Coffee",
 
     ADD_COLLECTIONS = "[Collections] Add Coffee Collections",
@@ -11,6 +15,15 @@ export enum CoffeeActionsTypes{
 
 export const loadCoffeeRequest = createAction(
     CoffeeActionsTypes.LOAD_COFFEES,
+    props<{coffees: Coffee[]}>()
+)
+
+export const beforeLoadCoffee = createAction(
+    CoffeeActionsTypes.BEFORE_LOAD_COFFEES
+)
+
+export const loadSuccessCoffee = createAction(
+    CoffeeActionsTypes.LOAD_COFFEES_SUCCESS,
     props<{coffees: Coffee[]}>()
 )
 

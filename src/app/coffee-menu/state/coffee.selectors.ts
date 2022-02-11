@@ -17,8 +17,6 @@ export const selectCollectionsSum = createSelector(
     selectCoffeesFeature,
     (state: CoffeeState) => {
         let total = state.collections.reduce((acc, cur) => acc + cur.totalPrice, 0);
-        console.log('total : ',total);
-        
         return total;
     }
 )
