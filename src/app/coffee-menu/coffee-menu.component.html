@@ -1,8 +1,9 @@
-
-<!-- <button type="button" class="btn btn-info" [routerLink]="['/coffee-menu/add-coffee']" >메뉴 추가</button> -->
 <h1>
   커피 메뉴
 </h1>
+<hr>
+<button type="button" class="btn btn-primary" routerLink="/add-coffee" routerLinkActive="active">메뉴 생성</button>
+<hr>
 <ul class="list-group">
   <li *ngFor="let item of coffees$ | async" class="list-group-item" (click)="addCoffee(item)"> 
     {{item.id}} / {{item.menuNm}} ({{item.price}}원) 
@@ -26,14 +27,18 @@
         <td>{{ coffeeCollection.menuNm }}</td>
         <td>{{ coffeeCollection.quantity }}</td>
         <td>
-          {{ coffeeCollection.totalPrice }}
+          {{ (coffeeCollection.totalPrice | moneyFormat ) }}
           <button class="btn btn-primary" type="button" (click)="plusCalCoffee(coffeeCollection)">추가</button>
           <button class="btn btn-danger" type="button" (click)="minusCalCoffee(coffeeCollection)">빼기</button>
         </td>
       </tr>
     </tbody>
   </table>
-
- 총합 : {{ (total$ | async) }}원
+  총합 : {{ (total$ | async | moneyFormat) }}원
 <hr>
 <router-outlet></router-outlet>
+<button class="btn btn-primary" type="button" (click)="open()">결제</button>
+<app-modal *ngIf="parentIsModal" (outsideEvent)="closeModal()"></app-modal>
+<div class="alert">
+  <ngb-alert class="mt-10" *ngIf="isAlert"  [animation]="false" [dismissible]="true" [type]="'danger'"><strong>Warning!</strong> 결제가 0원 입니다.</ngb-alert>
+</div>

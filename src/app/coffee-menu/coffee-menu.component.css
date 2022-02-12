@@ -1,0 +1,22 @@
+.mt-10{
+    margin-top: 10px;
+}
+
+.alert{
+    position: absolute;
+    width: 50%;
+    left: 25%;
+    bottom: 30px;
+    animation-name: move;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+}
+
+@keyframes move{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
