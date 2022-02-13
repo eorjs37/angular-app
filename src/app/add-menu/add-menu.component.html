@@ -1,11 +1,28 @@
-<h1>커피 메뉴생성</h1>
-{{ model | json }}
-<div class="form-group">
-    <label for="menu-name">메뉴명</label>
-    <input id="menu-name" class="form-control" type="text" [(ngModel)]="model.menuNm">
+<div class="container">
+    <h1>커피 메뉴생성</h1>
+
+    <form #coffeeForm="ngForm" (ngSubmit)="onSubmit(coffeeForm)"  >
+        <div class="form-group">
+            <label for="name">메뉴명</label>
+            <input id="name" name="name" class="form-control" type="text" [(ngModel)]="model.menuNm" #menuNm="ngModel" required>
+            <div [hidden]="menuNm.pristine || menuNm.valid"  class="alert alert-danger">
+                메뉴명은 필수 입니다.
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="price">메뉴명</label>
+            <input id="price" name="price" class="form-control" type="number" [(ngModel)]="model.price" #price="ngModel" required>
+            <div [hidden]="price.pristine || price.valid"  class="alert alert-danger">
+                가격은 필수 입니다.
+            </div>
+        </div>
+        
+        <button type="button" class="btn btn-primary" (click)="newCoffee();coffeeForm.resetForm({})">메뉴 추가</button>
+        <button type="submit" class="ms-3 btn btn-success" [disabled]="coffeeForm.invalid">메뉴 생성  </button>
+    </form>
 </div>
 
-<div class="form-group">
-    <label for="price">메뉴명</label>
-    <input id="price" class="form-control" type="number" [(ngModel)]="model.price">
-</div>
+
+
+

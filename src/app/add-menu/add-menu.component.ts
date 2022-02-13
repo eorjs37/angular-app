@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 class Coffees{
   constructor(public id: number, public menuNm: string, public price: number) {}
 }
@@ -15,8 +16,14 @@ export class AddMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('model : ' , this.model);
-    
   }
 
+  newCoffee() {
+    this.model = new Coffees(-1, '', 0);
+  }
+
+  onSubmit(coffeeForm: NgForm) {
+    console.log(coffeeForm);
+    
+  }
 }
