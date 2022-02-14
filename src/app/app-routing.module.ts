@@ -1,19 +1,28 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HeroesComponent } from './heroes/heroes.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { AddHeroComponent } from './add-hero/add-hero.component';
-import { NewHeroesComponent } from './new-heroes/new-heroes.component';
 import { CoffeeMenuComponent } from './coffee-menu/coffee-menu.component';
+import { CoffeeSelectedComponent } from './coffee-menu/coffee-selected/coffee-selected.component';
+import { AddCoffeeMenuComponent } from './coffee-menu/add-coffee-menu/add-coffee-menu.component';
+import { RxjsComponent } from './rxjs/rxjs.component';
+import { AddMenuComponent } from './add-menu/add-menu.component';
 const routes: Routes = [
   { path: '', redirectTo: '/coffee-menu', pathMatch: 'full' },
-  { path: 'heroes', component: HeroesComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'detail/:id', component: HeroDetailComponent },
-  { path: 'add', component: AddHeroComponent },
-  { path: 'new-heroes', component: NewHeroesComponent },
-  { path: 'coffee-menu', component: CoffeeMenuComponent}
+  {
+    path: 'coffee-menu',
+    component: CoffeeMenuComponent,
+    children: [
+      { path: 'menu-one', component: CoffeeSelectedComponent },
+      { path: 'add-coffee', component: AddCoffeeMenuComponent}
+    ]
+  },
+  {
+    path: 'rxjs',
+    component: RxjsComponent
+  },
+  {
+    path: 'add-coffee',
+    component:AddMenuComponent
+  }
 ];
 
 @NgModule({
