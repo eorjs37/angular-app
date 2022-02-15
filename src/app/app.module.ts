@@ -6,26 +6,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule} from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './service/in-memory-data.service';
-import { HeroesComponent } from './heroes/heroes.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { MessagesComponent } from './messages/messages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AddHeroComponent } from './add-hero/add-hero.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { NewHeroesModule } from './new-heroes/new-heroes.module';
 import { CoffeeMenuModule } from './coffee-menu/coffee-menu.module';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RxjsComponent } from './rxjs/rxjs.component';
+import { PipesModule } from './pipes/pipes.module';
+import { AddMenuComponent } from './add-menu/add-menu.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent,
-    HeroDetailComponent,
-    MessagesComponent,
-    DashboardComponent,
-    AddHeroComponent
+    RxjsComponent,
+    AddMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -33,17 +28,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {
-      runtimeChecks: {
-        // strictStateSerializability: true,
-        // strictActionSerializability: true,
-        // strictActionWithinNgZone: true,
-        // strictActionTypeUniqueness: true,
-        // strictStateImmutability: false, 
-        // strictActionImmutability: false,
-      }
-    }),
-    NewHeroesModule,
+    StoreModule.forRoot({}),
     CoffeeMenuModule,
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
@@ -53,6 +38,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       InMemoryDataService, { dataEncapsulation: false }
     ),
     NgbModule,
+    ReactiveFormsModule,
+    PipesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
