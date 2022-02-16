@@ -23,3 +23,7 @@ body, input[type="text"], button {
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.mr-10{
+  margin-right: 10px;
+}
