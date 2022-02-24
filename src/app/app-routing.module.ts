@@ -6,7 +6,7 @@ import { AddCoffeeMenuComponent } from './coffee-menu/add-coffee-menu/add-coffee
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { AddMenuComponent } from './add-menu/add-menu.component';
 const routes: Routes = [
-  { path: '', redirectTo: '/coffee-menu', pathMatch: 'full' },
+  { path: '', redirectTo: '/rxjs', pathMatch: 'full' },
   {
     path: 'coffee-menu',
     component: CoffeeMenuComponent,
