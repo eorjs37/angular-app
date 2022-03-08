@@ -11,8 +11,8 @@ export class AppComponent {
   nowdate$: Observable<number>;
 
   constructor() {
-    // this.nowdate$ = interval(1000).pipe(
-    //   map(x => x = new Date().getTime())
-    // );
+    this.nowdate$ = interval(1000).pipe(
+      map(x => x = new Date().getTime())
+    );
   }
 }
