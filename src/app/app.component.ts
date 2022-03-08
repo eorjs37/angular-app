@@ -9,10 +9,10 @@ import { map, tap } from 'rxjs/operators';
 export class AppComponent {
   title = 'Let`s Study Angular';
   nowdate$: Observable<number>;
-  
+
   constructor() {
-    this.nowdate$ = interval(1000).pipe(
-      map(x => x = new Date().getTime())
-    );
+    // this.nowdate$ = interval(1000).pipe(
+    //   map(x => x = new Date().getTime())
+    // );
   }
 }
