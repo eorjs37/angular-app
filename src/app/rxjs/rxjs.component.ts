@@ -1,20 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 // RxJS 임포트
 import { Observable } from 'rxjs';
+//FileUpload API
+import { FileuploadService } from '../service/fileupload.service';
 @Component({
   selector: 'app-rxjs',
   templateUrl: './rxjs.component.html',
   styleUrls: ['./rxjs.component.css']
 })
 export class RxjsComponent implements OnInit {
+  public id:String;
+  public file:any;
+  public formData:FormData = new FormData();
+  public SERVER_URL = environment.apiUrl;
+  public progressBar:number=0;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private fileuploadService:FileuploadService) { 
     
   }
 
   ngOnInit() {
     this.makeObserable();
+
+    this.http.get(this.SERVER_URL+'/coffees/all').subscribe(
+      (res) => {
+        console.log(res);
+        
+      }
+    )
   }
 
   makeObserable() {
@@ -50,6 +65,25 @@ export class RxjsComponent implements OnInit {
       () => console.log('Complete')
     )
 
+  }
+
+  submit(){
+    this.fileuploadService.fileUplaod(this.formData)
+      .subscribe((event: HttpEvent<any>)=>{
+        switch(event.type){
+          case HttpEventType.UploadProgress:
+            const progress = Math.round(event.loaded / event.total * 100);
+            this.progressBar = progress;
+            break;
+        }
+      })
+  }
+
+  onFileSelected($event:any){
+    console.log($event);
+    const file:File = $event.target.files[0];
+    console.log(file);
+    this.formData.append('file',file);
   }
 
 }
