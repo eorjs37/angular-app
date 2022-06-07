@@ -16,6 +16,8 @@ export class RxjsComponent implements OnInit {
   public formData:FormData = new FormData();
   public SERVER_URL = environment.apiUrl;
   public progressBar:number=0;
+  public loaded:number = 0;
+  public total: number= 0;
 
   constructor(private http: HttpClient, private fileuploadService:FileuploadService) { 
     
@@ -74,6 +76,8 @@ export class RxjsComponent implements OnInit {
           case HttpEventType.UploadProgress:
             const progress = Math.round(event.loaded / event.total * 100);
             this.progressBar = progress;
+            this.loaded = event.loaded;
+            this.total = event.total;
             break;
         }
       })
