@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 // RxJS 임포트
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 //FileUpload API
 import { FileuploadService } from '../service/fileupload.service';
+import { catchError, tap, timeout } from 'rxjs/operators';
 @Component({
   selector: 'app-rxjs',
   templateUrl: './rxjs.component.html',
@@ -69,14 +70,37 @@ export class RxjsComponent implements OnInit {
 
   submit(){
     this.fileuploadService.fileUplaod(this.formData)
-      .subscribe((event: HttpEvent<any>)=>{
-        switch(event.type){
-          case HttpEventType.UploadProgress:
-            const progress = Math.round(event.loaded / event.total * 100);
+      .pipe(
+        timeout(30000),
+        tap(val =>{
+          console.log('val : ', val);
+        }),
+        catchError((error:any) => {
+          return throwError(error);
+        })
+      ).subscribe(
+        (val:any) =>{
+          console.log('val : ', val);
+          if(val.type === 1){
+            const progress = Math.round(val.loaded / val.total * 100);
             this.progressBar = progress;
-            break;
+          }
+        },
+        err =>{
+          console.error('err : ',err);
+          
         }
-      })
+      )
+      // .subscribe((event: HttpEvent<any>)=>{
+      //   switch(event.type){
+      //     case HttpEventType.UploadProgress:
+      //       const progress = Math.round(event.loaded / event.total * 100);
+      //       this.progressBar = progress;
+      //       break;
+      //   }
+      // },
+      // error => console.error('error : ',error)
+      // )
   }
 
   onFileSelected($event:any){
