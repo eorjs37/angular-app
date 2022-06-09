@@ -5,12 +5,23 @@ import { environment } from 'src/environments/environment';
 import { Observable, of, throwError } from 'rxjs';
 //FileUpload API
 import { FileuploadService } from '../service/fileupload.service';
-import { catchError, map, mergeMap, tap, timeout } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, tap, timeout } from 'rxjs/operators';
+
+
+interface File{
+  id:number,
+  formdata:FormData,
+  type: HttpEventType.DownloadProgress | HttpEventType.UploadProgress,
+  loaded: number,
+  total?: number,
+  progressBar:number,
+}
 @Component({
   selector: 'app-rxjs',
   templateUrl: './rxjs.component.html',
   styleUrls: ['./rxjs.component.css']
 })
+
 export class RxjsComponent implements OnInit {
   public id:String;
   public file:any;
@@ -107,49 +118,33 @@ export class RxjsComponent implements OnInit {
         tap((item) => console.log('item : ',item)),
         mergeMap(item =>
           this.fileuploadService.fileUplaod(item.formdata).pipe(
-            tap((res) =>{
-              console.log('res : ',res);
-            }), 
-            map(value => Object.assign(value,item))
+            filter(value => value.type === 1),
+            map(value => Object.assign(item,value )),
           )
         )
       )
       .subscribe(
-        (val:any)=>{
-        if(val.type === 1){
-            console.log('val : ' , val);
-            // const progress = Math.round(val.loaded / val.total * 100);
-            // this.progressBar = progress;
-            // this.loaded = val.loaded;
-            // this.total = val.total;
+        (event: File)=>{
+        console.log(event);
+        
+        if(event.type === 1){
+            console.log('val : ' , event);
+            const progress = Math.round(event.loaded / event.total * 100);
+            event.progressBar = Math.round(event.loaded / event.total * 100);
+            this.progressBar = progress;
+            this.loaded = event.loaded;
+            this.total = event.total;
           }
         },
         err =>{
           console.error('err : ',err);      
         }
       )
-
-    // this.fileuploadService.fileUplaod(this.formData)
-    //   .pipe(
-    //     timeout(30000),
-    //   ).subscribe(
-    //     (val:any) =>{
-    //       if(val.type === 1){
-    //         const progress = Math.round(val.loaded / val.total * 100);
-    //         this.progressBar = progress;
-    //         this.loaded = val.loaded;
-    //         this.total = val.total;
-    //       }
-    //     },
-    //     err =>{
-    //       console.error('err : ',err);      
-    //     }
-    //   )
   }
 
   onFileSelected($event:any){
     console.log($event);
-    const file:File = $event.target.files[0];
+    const file:any = $event.target.files[0];
     console.log(file);
     this.formData.append('file',file);
   }
