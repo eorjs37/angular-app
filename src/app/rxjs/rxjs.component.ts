@@ -9,8 +9,8 @@ import { filter, map, mergeMap, tap } from 'rxjs/operators';
 
 //파일 ngrx
 import { Store } from '@ngrx/store';
-import { addFileAction } from '../store/reducers/hero/file/file.actions'
-import { getFileList } from '../store/reducers/hero/file/file.selectors'
+import { addFileAction,addBeforeFileAction } from '../store/reducers/file/file.actions'
+import { getFileList } from '../store/reducers/file/file.selectors'
 interface Files{
   id:number,
   formdata:FormData,
@@ -41,12 +41,7 @@ export class RxjsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get(this.SERVER_URL+'/coffees/all').subscribe(
-      (res) => {
-        console.log(res);
-        
-      }
-    )
+
   }
 
   pushArray(){
@@ -61,6 +56,16 @@ export class RxjsComponent implements OnInit {
   }
 
   submit(){
+    // const item ={
+    //         id:-1,
+    //         file: this.formData,
+    //         progressBar:0,
+    //         loaded:0,
+    //         total:0
+    // }
+    // this.store.dispatch(addBeforeFileAction({file:item}));
+    
+    this.store.dispatch(addBeforeFileAction({file:this.formData}))
 
     // of(...this.list)
     //   .pipe(

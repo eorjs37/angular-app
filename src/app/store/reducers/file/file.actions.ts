@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { File } from './file';
+import { HttpEvent } from '@angular/common/http';
 
 export enum ActionTypes{
     LOAD_FILE_REQUEST = '[File] Load File Request',
@@ -7,7 +8,8 @@ export enum ActionTypes{
     LOAD_FILE_SUCCESS = '[File] Load File SUCCESS',
 
     BEFORE_ADD_FILE='[File] Before Add File',
-    ADD_FILE = '[File] Add File'
+    ADD_FILE = '[File] Add File',
+    ADD_FILE_SUCCESS = '[File] Add File Success'
 }
 
 export const loadFileRequestAction = createAction(
@@ -28,10 +30,15 @@ export const loadFileFailAction = createAction(
 
 export const addBeforeFileAction = createAction(
     ActionTypes.BEFORE_ADD_FILE,
-    props<{ file: File}>()
+    props<{ file: any}>()
 )
 
 export const addFileAction = createAction(
     ActionTypes.ADD_FILE,
     props<{ file: File}>()
+)
+
+export const addFileSuccess = createAction(
+    ActionTypes.ADD_FILE_SUCCESS,
+    props<{ res: HttpEvent<any>}>()
 )

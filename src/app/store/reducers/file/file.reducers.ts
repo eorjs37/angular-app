@@ -26,5 +26,10 @@ export const fileReducer = createReducer(
         copyState.fileList = copy;
 
         return copyState;
+    }),
+    on(FileActionsTypes.addFileSuccess, (state, { res }) =>{
+        const copyState = Object.assign({},state);
+
+        return state;
     })
 )

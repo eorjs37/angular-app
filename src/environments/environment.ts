@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://biggunsite.co.kr/api'
+  apiUrl: 'http://localhost:3000/api'
 };
 
 /*

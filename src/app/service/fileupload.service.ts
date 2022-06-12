@@ -20,7 +20,6 @@ const multiPartOptions = {
 })
 export class FileuploadService {
   constructor(private http: HttpClient) { 
-    console.log(environment.apiUrl);
     
   }
 
