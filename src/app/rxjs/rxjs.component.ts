@@ -30,7 +30,9 @@ export class RxjsComponent implements OnInit {
   public list: File[]=[];
   public fileList$ = this.store.select(getFileList)
 
-  constructor(private http: HttpClient, private fileuploadService:FileuploadService,private store: Store) { 
+  constructor(private http: HttpClient, 
+              private fileuploadService:FileuploadService,
+              private store: Store) { 
     
   }
 
@@ -39,14 +41,28 @@ export class RxjsComponent implements OnInit {
   }
 
   pushArray(){
-    const items = {
-            id:-1,
-            file: this.formData,
-            progressBar:0,
-            loaded:0,
-            total:0
+    if(this.list.length > 0){
+          const maxIdx = Math.max(...this.list.map(item => item.id));
+          const item = {
+              id:maxIdx+1,
+              file: this.formData,
+              progressBar:0,
+              loaded:0,
+              total:0
+          }
+          this.list.push(item);
     }
-    this.store.dispatch(addFileAction({file: items}));
+    else{
+          const item = {
+                id:0,
+                file: this.formData,
+                progressBar:0,
+                loaded:0,
+                total:0
+          }
+
+          this.list.push(item);
+    }
   }
 
   submit(){
