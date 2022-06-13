@@ -31,5 +31,8 @@ export const fileReducer = createReducer(
         const copyState = Object.assign({},state);
 
         return state;
+    }),
+    on(FileActionsTypes.beforeSendArrayFile,(state) =>{
+        return state;
     })
 )

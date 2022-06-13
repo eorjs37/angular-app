@@ -9,16 +9,10 @@ import { filter, map, mergeMap, tap } from 'rxjs/operators';
 
 //파일 ngrx
 import { Store } from '@ngrx/store';
-import { addFileAction,addBeforeFileAction } from '../store/reducers/file/file.actions'
-import { getFileList } from '../store/reducers/file/file.selectors'
-interface Files{
-  id:number,
-  formdata:FormData,
-  type: HttpEventType.DownloadProgress | HttpEventType.UploadProgress,
-  loaded: number,
-  total?: number,
-  progressBar:number,
-}
+import { addFileAction,addBeforeFileAction, beforeSendArrayFile } from '../store/reducers/file/file.actions'
+import { getFileList } from '../store/reducers/file/file.selectors';
+
+import { File } from '../store/reducers/file/file';
 @Component({
   selector: 'app-rxjs',
   templateUrl: './rxjs.component.html',
@@ -33,7 +27,7 @@ export class RxjsComponent implements OnInit {
   public progressBar:number=0;
   public loaded:number = 0;
   public total: number= 0;
-  public list: Array<any> =[];
+  public list: File[]=[];
   public fileList$ = this.store.select(getFileList)
 
   constructor(private http: HttpClient, private fileuploadService:FileuploadService,private store: Store) { 
@@ -65,7 +59,9 @@ export class RxjsComponent implements OnInit {
     // }
     // this.store.dispatch(addBeforeFileAction({file:item}));
     
-    this.store.dispatch(addBeforeFileAction({file:this.formData}))
+    //this.store.dispatch(addBeforeFileAction({file:this.formData}))
+
+    this.store.dispatch(beforeSendArrayFile())
 
     // of(...this.list)
     //   .pipe(

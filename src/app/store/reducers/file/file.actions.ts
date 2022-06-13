@@ -9,7 +9,9 @@ export enum ActionTypes{
 
     BEFORE_ADD_FILE='[File] Before Add File',
     ADD_FILE = '[File] Add File',
-    ADD_FILE_SUCCESS = '[File] Add File Success'
+    ADD_FILE_SUCCESS = '[File] Add File Success',
+
+    BEFORE_SEND_FILE ='[Array File] Before Send File'
 }
 
 export const loadFileRequestAction = createAction(
@@ -41,4 +43,8 @@ export const addFileAction = createAction(
 export const addFileSuccess = createAction(
     ActionTypes.ADD_FILE_SUCCESS,
     props<{ res: HttpEvent<any>}>()
+)
+
+export const beforeSendArrayFile = createAction(
+    ActionTypes.BEFORE_SEND_FILE,
 )
