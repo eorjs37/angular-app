@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect,ofType } from '@ngrx/effects';
+import { act, Actions, createEffect,ofType } from '@ngrx/effects';
 import { map, mergeMap, withLatestFrom,tap, filter } from 'rxjs/operators';
 import { HttpEvent } from '@angular/common/http';
 import { addBeforeFileAction,addFileSuccess, beforeSendArrayFile } from './file.actions';
 import { FileuploadService } from 'src/app/service/fileupload.service';
 import { Store ,Action } from '@ngrx/store';
 import { getFileList } from './file.selectors';
-import { from } from 'rxjs';
+import { from, of } from 'rxjs';
 import { File } from './file';
 
 @Injectable()
@@ -24,12 +24,11 @@ export class FileEffects{
         )
     ))
 
+    //2022.06.14 진행중
     sendArrayFile$ = createEffect(() => this.actions$.pipe(
-        ofType(beforeSendArrayFile),
-        withLatestFrom(this.store.select(getFileList)),
-        // filter((list) => {
-        //     return list
-        // }), 
+        ofType(beforeSendArrayFile),//1.beforeSendArrayFile 호출
+        withLatestFrom(this.store.select(getFileList)), //2. getFileList 가져오기
+        //3.
         mergeMap((fileList:any) =>
             this.apiService.fileUplaod(fileList.file)
             .pipe(

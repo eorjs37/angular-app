@@ -61,7 +61,7 @@ export class RxjsComponent implements OnInit {
     
     //this.store.dispatch(addBeforeFileAction({file:this.formData}))
 
-    this.store.dispatch(beforeSendArrayFile())
+    //this.store.dispatch(beforeSendArrayFile())
 
     // of(...this.list)
     //   .pipe(
