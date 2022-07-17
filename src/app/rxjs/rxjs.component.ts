@@ -37,7 +37,7 @@ export class RxjsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.fileuploadService.getCoffeeList().subscribe()
   }
 
   pushArray(){
