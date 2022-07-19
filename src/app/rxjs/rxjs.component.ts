@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient,  HttpEventType } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-// RxJS 임포트
-import { of } from 'rxjs';
 //FileUpload API
 import { FileuploadService } from '../service/fileupload.service';
-import { filter, map, mergeMap, tap } from 'rxjs/operators';
 
 //파일 ngrx
 import { Store } from '@ngrx/store';
-import { addFileAction,addBeforeFileAction, beforeSendArrayFile } from '../store/reducers/file/file.actions'
+import { addFileAction,beforeSendArrayFile } from '../store/reducers/file/file.actions'
 import { getFileList } from '../store/reducers/file/file.selectors';
 
 import { File } from '../store/reducers/file/file';
@@ -30,81 +26,30 @@ export class RxjsComponent implements OnInit {
   public list: File[]=[];
   public fileList$ = this.store.select(getFileList)
 
-  constructor(private http: HttpClient, 
-              private fileuploadService:FileuploadService,
+  constructor(private fileuploadService:FileuploadService,
               private store: Store) { 
     
   }
 
   ngOnInit() {
-    this.fileuploadService.getCoffeeList().subscribe()
+    this.fileuploadService.getCoffeeList().subscribe();
+    
   }
 
   pushArray(){
-    if(this.list.length > 0){
-          const maxIdx = Math.max(...this.list.map(item => item.id));
-          const item = {
-              id:maxIdx+1,
-              file: this.formData,
-              progressBar:0,
-              loaded:0,
-              total:0
-          }
-          this.list.push(item);
+    
+    const fileItem:File ={
+      id:0,
+      file:this.formData,
+      progressBar:0,
+      loaded:0,
+      total:0
     }
-    else{
-          const item = {
-                id:0,
-                file: this.formData,
-                progressBar:0,
-                loaded:0,
-                total:0
-          }
-
-          this.list.push(item);
-    }
+    this.store.dispatch(addFileAction({file:fileItem}))
   }
 
   submit(){
-    // const item ={
-    //         id:-1,
-    //         file: this.formData,
-    //         progressBar:0,
-    //         loaded:0,
-    //         total:0
-    // }
-    // this.store.dispatch(addBeforeFileAction({file:item}));
-    
-    //this.store.dispatch(addBeforeFileAction({file:this.formData}))
-
-    //this.store.dispatch(beforeSendArrayFile())
-
-    // of(...this.list)
-    //   .pipe(
-    //     tap((item) => console.log('item : ',item)),
-    //     mergeMap(item =>
-    //       this.fileuploadService.fileUplaod(item.formdata).pipe(
-    //         filter(value => value.type === 1),
-    //         map(value => Object.assign(item,value )),
-    //       )
-    //     )
-    //   )
-    //   .subscribe(
-    //     (event: Files)=>{
-    //     console.log(event);
-        
-    //     if(event.type === 1){
-    //         const progress = Math.round(event.loaded / event.total * 100);
-    //         event.progressBar = Math.round(event.loaded / event.total * 100);
-    //         this.progressBar = progress;
-    //         this.loaded = event.loaded;
-    //         this.total = event.total;
-    //       }
-    //     },
-    //     err =>{
-    //       console.error('err : ',err);      
-    //     }
-    //   )
+    this.store.dispatch(beforeSendArrayFile());
   }
 
   onFileSelected($event:any){
