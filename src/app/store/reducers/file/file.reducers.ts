@@ -13,7 +13,6 @@ export const fileReducer = createReducer(
         fileList: fileList
     })),
     on(FileActionsTypes.addFileAction,(state,{ file }) =>{
-        console.log(file);
         
         const copyState = Object.assign({},state);
         const copyFile = Object.assign({},file);
