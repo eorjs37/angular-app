@@ -64,7 +64,25 @@ export class RxjsComponent implements OnInit {
   }
 
   submit(){
-    this.store.dispatch(beforeSendArrayFile());
+    this.fileList.forEach((fileItem)=>{
+      const formData= new FormData();
+      formData.append('id',   fileItem.id as any) ;
+      formData.append('file' , fileItem.file.get('file'));
+      this.fileuploadService.fileUplaod(formData).subscribe(
+        (result)=>{
+          console.log('result ',result);
+          
+        },
+        (err)=>{
+          console.error('file upload error : ',err);
+          
+        },
+        ()=>{
+          console.log('finally');
+        }
+      )
+    })
+
   }
 
   onFileSelected($event:any){
