@@ -1,31 +1,33 @@
-<form (submit)="$event.preventDefault()">
-    <p>
-        <strong>아이디</strong>
-        <input type="text" name="name" [(ngModel)]="id" placeholder="아이디 입력">
-    </p>
+<div class="container">
+    <form (submit)="$event.preventDefault()">
+        <p>
+            <strong>아이디</strong>
+            <input type="text" name="name" [(ngModel)]="id" placeholder="아이디 입력">
+        </p>
 
-    <p>
-        <strong>파일업로드</strong>
-        <input type="file" name="file" (change)="onFileSelected($event)" #fileUpload>
-    </p>
+        <p>
+            <strong>파일업로드</strong>
+            <input type="file" name="file" (change)="onFileSelected($event)" #fileUpload>
+        </p>
 
 
-    <div>
-        <button (click)="pushArray()">배열에 담기</button>
+        <div>
+            <button (click)="pushArray()">배열에 담기</button>
+        </div>
+
+
+
+        <button (click)="submit()">전송</button>
+    </form>
+
+    <div *ngFor="let item of fileList">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped" [style.width]="item.progressBar+'%'" role="progressbar"
+                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <h1>{{ item.progressBar }}%</h1>
+
+        <h1> {{ item.loaded }}</h1>
+        <h1> {{ item.total }}</h1>
     </div>
-
-
-
-    <button (click)="submit()">전송</button>
-</form>
-
-<!-- <div *ngFor="let item of fileList$ | async">
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped" [style.width]="item.progressBar+'%'" role="progressbar"
-            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-    <h1>{{ item.progressBar }}%</h1>
-
-    <h1> {{ item.loaded }}</h1>
-    <h1> {{ item.total }}</h1>
-</div> -->
+</div>

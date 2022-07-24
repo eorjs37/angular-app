@@ -24,15 +24,30 @@ export class RxjsComponent implements OnInit {
   public loaded:number = 0;
   public total: number= 0;
   public list: File[]=[];
-  public fileList$ = this.store.select(getFileList)
+  public fileList$ = this.store.select(getFileList);
+  public fileList: File[];
 
   constructor(private fileuploadService:FileuploadService,
               private store: Store) { 
+    
     
   }
 
   ngOnInit() {
     this.fileuploadService.getCoffeeList().subscribe();
+
+    this.fileList$.subscribe(
+      (result)=>{
+        console.log(result);
+        this.fileList = result;
+      },
+      (err)=>{
+        console.error('err : ',err);
+      },
+      ()=>{
+        console.log('complete');
+      }
+    )
     
   }
 
@@ -58,3 +73,4 @@ export class RxjsComponent implements OnInit {
   }
 
 }
+

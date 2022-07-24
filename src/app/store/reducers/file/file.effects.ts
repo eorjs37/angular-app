@@ -6,7 +6,7 @@ import { addBeforeFileAction,addFileSuccess, beforeSendArrayFile } from './file.
 import { FileuploadService } from 'src/app/service/fileupload.service';
 import { Store  } from '@ngrx/store';
 import { getFileList } from './file.selectors';
-import { from, of } from 'rxjs';
+import { from, merge, of } from 'rxjs';
 
 @Injectable()
 export class FileEffects{
@@ -28,10 +28,9 @@ export class FileEffects{
             ofType(beforeSendArrayFile),
             concatLatestFrom(() => this.store$.select(getFileList)),
             map(([_,actions])=> {
-                from(actions).pipe(
-                    concatMap(item => this.apiService.fileUplaod(item).pipe(
-                        map((res:HttpEvent<any>) => addFileSuccess({res})),
-                        // catchError((err) => console.error('err : ',err))
+                return from(actions).pipe(
+                    mergeMap((item:any) => this.apiService.fileUplaod(item).pipe(
+                        map((res:HttpEvent<any>) => addFileSuccess({res}))
                     ))
                 ).subscribe()
             }),
