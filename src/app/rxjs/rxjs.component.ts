@@ -9,6 +9,10 @@ import { addFileAction,beforeSendArrayFile } from '../store/reducers/file/file.a
 import { getFileList } from '../store/reducers/file/file.selectors';
 
 import { File } from '../store/reducers/file/file';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import * as _ from 'lodash';
+import { catchError, timeout } from 'rxjs/operators';
+import { of } from 'rxjs';
 @Component({
   selector: 'app-rxjs',
   templateUrl: './rxjs.component.html',
@@ -38,8 +42,7 @@ export class RxjsComponent implements OnInit {
 
     this.fileList$.subscribe(
       (result)=>{
-        console.log(result);
-        this.fileList = result;
+        this.fileList = _.cloneDeep(result);
       },
       (err)=>{
         console.error('err : ',err);
@@ -58,7 +61,9 @@ export class RxjsComponent implements OnInit {
       file:this.formData,
       progressBar:0,
       loaded:0,
-      total:0
+      total:0,
+      isFinish:false,
+      isError:false
     }
     this.store.dispatch(addFileAction({file:fileItem}))
   }
@@ -68,13 +73,43 @@ export class RxjsComponent implements OnInit {
       const formData= new FormData();
       formData.append('id',   fileItem.id as any) ;
       formData.append('file' , fileItem.file.get('file'));
-      this.fileuploadService.fileUplaod(formData).subscribe(
-        (result)=>{
-          console.log('result ',result);
-          
+      this.fileuploadService.fileUplaod(formData)
+      .pipe(
+        timeout(2000),
+      )
+      .subscribe(
+        (event: (HttpEvent<any>))=>{
+          switch (event.type) {
+            case HttpEventType.Sent:
+              console.log('Request has been made!');
+              break;
+            case HttpEventType.ResponseHeader:
+              console.log('Response header has been received!');
+              break;
+            case HttpEventType.UploadProgress:
+              fileItem.progressBar = Math.round((event.loaded / event.total) * 100);
+              console.log(event.total);
+              
+              console.log(event.loaded);
+              
+              console.log(`id-${fileItem.id} : `, fileItem.progressBar);
+              
+              break;
+            case HttpEventType.Response:
+              console.log('User successfully created!', event.body);
+              setTimeout(() => {
+                fileItem.progressBar = 0;
+              }, 2000);
+              break;
+            default:
+              break;
+          }
         },
         (err)=>{
           console.error('file upload error : ',err);
+          setTimeout(() => {
+            fileItem.progressBar = 0;
+          }, 2000);
           
         },
         ()=>{

@@ -6,4 +6,6 @@ export interface File {
     loaded:number;
     total:number;
     res?:HttpEvent<any>;
+    isFinish:boolean;
+    isError?:boolean;
 }

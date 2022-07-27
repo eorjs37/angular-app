@@ -25,7 +25,8 @@
             <div class="progress-bar progress-bar-striped" [style.width]="item.progressBar+'%'" role="progressbar"
                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
-        <h1>{{ item.progressBar }}%</h1>
+        <h1 *ngIf="item.progressBar !== 100">{{ item.progressBar }}%</h1>
+        <h1 *ngIf="item.progressBar === 100">서버에 전송중</h1>
 
         <h1> {{ item.loaded }}</h1>
         <h1> {{ item.total }}</h1>
