@@ -7,14 +7,6 @@ const httpOptions = {
     'Content-Type':  'application/json'
   })
 };
-
-const multiPartOptions = {
-  headers: new HttpHeaders({
-    'Access-Control-Allow-Origin':'*',
-    'Content-Type':  'multipart/form-data'
-  })
-}
-
 @Injectable({
   providedIn: 'root'
 })

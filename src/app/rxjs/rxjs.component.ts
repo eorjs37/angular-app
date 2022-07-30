@@ -30,6 +30,9 @@ export class RxjsComponent implements OnInit {
   public list: File[]=[];
   public fileList$ = this.store.select(getFileList);
   public fileList: File[];
+  private finshCount:number = 0;
+  private errorCount:number = 0;
+  public isFinsh:boolean=false;
 
   constructor(private fileuploadService:FileuploadService,
               private store: Store) { 
@@ -62,7 +65,7 @@ export class RxjsComponent implements OnInit {
       progressBar:0,
       loaded:0,
       total:0,
-      isFinish:false,
+      isFinsh:false,
       isError:false
     }
     this.store.dispatch(addFileAction({file:fileItem}))
@@ -88,17 +91,12 @@ export class RxjsComponent implements OnInit {
               break;
             case HttpEventType.UploadProgress:
               fileItem.progressBar = Math.round((event.loaded / event.total) * 100);
-              console.log(event.total);
-              
-              console.log(event.loaded);
-              
-              console.log(`id-${fileItem.id} : `, fileItem.progressBar);
-              
               break;
             case HttpEventType.Response:
               console.log('User successfully created!', event.body);
               setTimeout(() => {
-                fileItem.progressBar = 0;
+                this.finshCount++;
+                fileItem.isFinsh = true;
               }, 2000);
               break;
             default:
@@ -106,14 +104,19 @@ export class RxjsComponent implements OnInit {
           }
         },
         (err)=>{
-          console.error('file upload error : ',err);
+          console.error(`${fileItem.id} : file upload error `, err);
           setTimeout(() => {
             fileItem.progressBar = 0;
+            this.errorCount++;
+            fileItem.isError = true;
           }, 2000);
           
         },
         ()=>{
-          console.log('finally');
+          console.log(`${fileItem.id} : finally`);
+          if(this.fileList.length === (this.finshCount + this.errorCount)){
+            this.isFinsh = true;
+          }
         }
       )
     })
