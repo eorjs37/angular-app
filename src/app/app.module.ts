@@ -18,12 +18,16 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { fileReducer } from './store/reducers/file/file.reducers';
 import { FileEffects } from 'src/app/store/reducers/file/file.effects';
+import { HomeComponent } from './home/home.component';
+import { HighlightDirective } from './highlight.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     RxjsComponent,
     AddMenuComponent,
+    HomeComponent,
+    HighlightDirective,
   ],
   imports: [
     CommonModule,

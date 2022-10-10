@@ -23,7 +23,7 @@ export class RxjsComponent implements OnInit {
   public id:String;
   public file:any;
   public formData:FormData = new FormData();
-  public SERVER_URL = environment.apiUrl;
+  public SERVER_URL:String = environment.apiUrl;
   public progressBar:number=0;
   public loaded:number = 0;
   public total: number= 0;
