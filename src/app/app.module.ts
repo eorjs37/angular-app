@@ -20,6 +20,8 @@ import { fileReducer } from './store/reducers/file/file.reducers';
 import { FileEffects } from 'src/app/store/reducers/file/file.effects';
 import { HomeComponent } from './home/home.component';
 import { HighlightDirective } from './highlight.directive';
+import { Component1Component } from './component/component1/component1.component';
+import { ChildComponent } from './component/child/child.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { HighlightDirective } from './highlight.directive';
     AddMenuComponent,
     HomeComponent,
     HighlightDirective,
+    Component1Component,
+    ChildComponent,
   ],
   imports: [
     CommonModule,

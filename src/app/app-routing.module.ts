@@ -5,8 +5,9 @@ import { CoffeeSelectedComponent } from './coffee-menu/coffee-selected/coffee-se
 import { AddCoffeeMenuComponent } from './coffee-menu/add-coffee-menu/add-coffee-menu.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { AddMenuComponent } from './add-menu/add-menu.component';
+import { Component1Component} from "./component/component1/component1.component"
 const routes: Routes = [
-  { path: '', redirectTo: '/rxjs', pathMatch: 'full' },
+  { path: '', redirectTo: '/component1', pathMatch: 'full' },
   {
     path: 'coffee-menu',
     component: CoffeeMenuComponent,
@@ -22,6 +23,9 @@ const routes: Routes = [
   {
     path: 'add-coffee',
     component:AddMenuComponent
+  },{
+    path:'component1',
+    component:Component1Component
   }
 ];
 
